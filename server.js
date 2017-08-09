@@ -11,7 +11,7 @@ var router = express.Router();              // get an instance of the express Ro
 // Get race data API service
 router.route('/:series/:year/:race') 
 
-    .get(function(req, res) {
+    .get(function(req, res,next) {
 
       var raceData = new Array();  
       var csv = require("fast-csv");
@@ -50,6 +50,11 @@ router.route('/:series/:year/:race')
     });
 
 // all of our routes will be prefixed with /api
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 app.use('/api', router);
 
 // START THE SERVER
