@@ -19,33 +19,44 @@ router.route('/:series/:year/:race')
       var sec = require("./app/seconds.js");
  
       //parsing the CSV file
+     
+      var file = "resources/" + req.params.series + "/" + req.params.year + "/" + req.params.race + ".CSV";
 
-      fs.createReadStream("resources/" + req.params.series + "/" + req.params.year + "/" + req.params.race + ".CSV")
-       .pipe(csv.parse({delimiter: ";", headers: true, trim: true}))
-       .on("data", function(data){
+      fs.stat(file, function(err, stat) {
+        if(err != null) {
+          res.sendStatus(404);
+        }
+        else {
+ 
+          fs.createReadStream(file)
+            .pipe(csv.parse({delimiter: ";", headers: true, trim: true}))
+            .on("data", function(data){
 
-         //We build the array with the lap data
-         raceData.push( { lap: data.LAP_NUMBER,
-                          driver_name: data.DRIVER_NAME,
-                          lap_time: data.LAP_TIME,
-                          segundos: sec.toSeconds(data.LAP_TIME),
-                          class: data.CLASS,
-                          team:  data.TEAM,
-                          manufacturer: data.MANUFACTURER});
+             //We build the array with the lap data
+             raceData.push( { lap: data.LAP_NUMBER,
+                              driver_name: data.DRIVER_NAME,
+                              lap_time: data.LAP_TIME,
+                              segundos: sec.toSeconds(data.LAP_TIME),
+                              class: data.CLASS,
+                              team:  data.TEAM,
+                              manufacturer: data.MANUFACTURER});
 
-       })
-       .on("end", function(){
+             })
+             .on("end", function(){
 
-         //calling the function to calculate the stats
+               //calling the function to calculate the stats
 
-         var st = require("./app/statscalculation.js");
-         var flatData=st.calcStats(raceData);
+              var st = require("./app/statscalculation.js");
+              var flatData=st.calcStats(raceData);
 
-         //sending the output as JSON
+              //sending the output as JSON
        
-         res.contentType('application/json');
-         res.send(JSON.stringify(flatData));
-       });
+              res.contentType('application/json');
+              res.send(JSON.stringify(flatData));
+            });
+        }
+
+      });
 
     });
 
@@ -56,4 +67,5 @@ app.use('/api', router);
 // =============================================================================
 app.listen(port);
 console.log('Servidor chutando en ' + port);
+module.exports = app
 
