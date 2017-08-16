@@ -12,7 +12,7 @@ var expect = chai.expect;
 
 //Our parent block
 describe('Stats api', () => {
-    beforeEach((done) => { });     
+    beforeEach((done) => { });
   });
 
   /*
@@ -36,4 +36,15 @@ describe('Stats api', () => {
               done();
             });
       });
+
+      it('Returns the CORS headers', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/SPA')
+            .end((err, res) => {
+              res.should.have.header("Access-Control-Allow-Origin", "*");
+              res.should.have.header("Access-Control-Allow-Headers", "X-Requested-With");
+              done();
+            });
+      });
+
   });

@@ -2,32 +2,33 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express    = require('express');      // call express
+var app        = express();               // define our app using express
 
-var port = process.env.PORT || 8080;        // set our port
-var router = express.Router();              // get an instance of the express Router
+var port = process.env.PORT || 8080;     // set our port
+var router = express.Router();          // get an instance of the express Router
 
 // Get race data API service
-router.route('/:series/:year/:race') 
+router.route('/:series/:year/:race')
 
-    .get(function(req, res) {
+    .get(function(req, res,next) {
 
-      var raceData = new Array();  
+      var raceData = new Array();
       var csv = require("fast-csv");
       var fs = require("fs");
       var sec = require("./app/seconds.js");
- 
+
       //parsing the CSV file
      
-      var file = "resources/" + req.params.series + "/" + req.params.year + "/" + req.params.race + ".CSV";
+      var file = "resources/" + req.params.series + "/" + req.params.year
+               + "/" + req.params.race + ".CSV";
 
       fs.stat(file, function(err, stat) {
         if(err != null) {
           res.sendStatus(404);
         }
         else {
- 
+
           fs.createReadStream(file)
             .pipe(csv.parse({delimiter: ";", headers: true, trim: true}))
             .on("data", function(data){
@@ -50,7 +51,7 @@ router.route('/:series/:year/:race')
               var flatData=st.calcStats(raceData);
 
               //sending the output as JSON
-       
+
               res.contentType('application/json');
               res.send(JSON.stringify(flatData));
             });
@@ -60,6 +61,12 @@ router.route('/:series/:year/:race')
 
     });
 
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
@@ -68,4 +75,3 @@ app.use('/api', router);
 app.listen(port);
 console.log('Servidor chutando en ' + port);
 module.exports = app
-
