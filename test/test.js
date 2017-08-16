@@ -6,6 +6,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let should = chai.should();
+let sec = require("../app/seconds.js");
 
 chai.use(chaiHttp);
 var expect = chai.expect;
@@ -19,6 +20,7 @@ describe('Stats api', () => {
   * Test the /GET route
   */
   describe('/GET race', () => {
+
       it('Returns 404 if the race does not exist', (done) => {
         chai.request(server)
             .get('/api/IMSA/2014/LONG_BEACH')
@@ -46,5 +48,19 @@ describe('Stats api', () => {
               done();
             });
       });
+
+  });
+
+  describe("Seconds Function", () => {
+
+    it('Manages times with hours', (done) => {
+      sec.toSeconds("1:30:45.678").should.equal(5445.678);
+      done();
+    });
+
+    it('Manages times without hours', (done) => {
+      sec.toSeconds("1:45.678").should.be.equal(105.678);
+      done();
+    });
 
   });

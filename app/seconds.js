@@ -1,4 +1,3 @@
-
 //Function to translate time in HH:MM:SS.nnn to seconds
 //Manages time with hours and without hours
 
