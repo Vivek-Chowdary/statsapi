@@ -64,6 +64,8 @@ describe('Stats api', () => {
       done();
     });
 
+  });
+
   describe("Stats calculate", () => {
 
     it('Returns the data with 3 decimals', (done) => {
@@ -78,11 +80,8 @@ describe('Stats api', () => {
       stat.calcStats(data)[0].min.should.equal('45.678');
       stat.calcStats(data)[0].avg.should.equal('45.678');
       stat.calcStats(data)[0].top20.should.equal('45.678');
-      
+
       done();
     });
-
-  });
-
 
   });
