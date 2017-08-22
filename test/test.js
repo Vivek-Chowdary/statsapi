@@ -7,6 +7,7 @@ let chaiHttp = require('chai-http');
 let server = require('../server');
 let should = chai.should();
 let sec = require("../app/seconds.js");
+let stat = require("../app/statscalculation.js");
 
 chai.use(chaiHttp);
 var expect = chai.expect;
@@ -62,5 +63,26 @@ describe('Stats api', () => {
       sec.toSeconds("1:45.678").should.be.equal(105.678);
       done();
     });
+
+  describe("Stats calculate", () => {
+
+    it('Returns the data with 3 decimals', (done) => {
+       data = [{
+        class: 'Test',
+        manufacturer: 'TestMaufacturer',
+        team: 'TestTeam',
+        driver_name: 'TestDriver',
+        segundos: '45.677999999'
+      }];
+
+      stat.calcStats(data)[0].min.should.equal('45.678');
+      stat.calcStats(data)[0].avg.should.equal('45.678');
+      stat.calcStats(data)[0].top20.should.equal('45.678');
+      
+      done();
+    });
+
+  });
+
 
   });

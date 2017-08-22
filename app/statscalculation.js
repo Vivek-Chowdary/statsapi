@@ -3,6 +3,7 @@ exports.calcStats = function(data) {
 
   //We calculate the stats by aggregating the racedata array
   var d3 = require("d3");
+  var f = d3.format(".3f");
 
   var byName = d3.nest()
                         .key(function(d) { return d.class; })
@@ -11,13 +12,14 @@ exports.calcStats = function(data) {
                         .key(function(d) { return d.driver_name; })
                         .rollup(function(v) { return {
                                                        count: v.length,
-                                                       min: d3.min(v, function(d) { return d.segundos; }),
-                                                       avg: d3.mean(v, function(d) { return d.segundos; }),
-                                                       top20: d3.mean(v.map(function(d) { return d.segundos;})
-                                                                .sort(d3.ascending).slice(0,20))
+                                                       min: f(d3.min(v, function(d) { return d.segundos; })),
+                                                       avg: f(d3.mean(v, function(d) { return d.segundos; })),
+                                                       top20: f(d3.mean(
+                                                         v.map(function(d) { return d.segundos;})
+                                                                .sort(d3.ascending).slice(0,20)))
                                                      }
                                             })
-                        .entries(data);       
+                        .entries(data);
 
   var flatData = [];
 
