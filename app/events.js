@@ -1,7 +1,15 @@
 exports.getevents = function() {
-  
+
   return ([
     { series: "IMSA", year: "2017", event: "DAYTONA"  },
+    { series: "IMSA", year: "2017", event: "SEBRING"  },
+    { series: "IMSA", year: "2017", event: "LONG BEACH"  },
+    { series: "IMSA", year: "2017", event: "COTA"  },
+    { series: "IMSA", year: "2017", event: "DETROIT"  },
+    { series: "IMSA", year: "2017", event: "WATKINS GLEN"  },
+    { series: "IMSA", year: "2017", event: "CTMP"  },
+    { series: "IMSA", year: "2017", event: "LIME ROCK"  },
+    { series: "IMSA", year: "2017", event: "ROAD AMERICA"  },
     { series: "WEC",  year: "2016", event: "SILVERSTONE"  },
     { series: "WEC",  year: "2016", event: "SPA"  },
     { series: "WEC",  year: "2016", event: "LE_MANS"  },
