@@ -52,6 +52,18 @@ describe('Stats api', () => {
 
   });
 
+  describe('/GET getevents', () => {
+
+      it('Returns 200', (done) => {
+        chai.request(server)
+            .get('/api/getevents')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
+    });
+
   describe("Seconds Function", () => {
 
     it('Manages times with hours', (done) => {

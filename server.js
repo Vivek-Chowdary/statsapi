@@ -9,6 +9,20 @@ var port = process.env.PORT || 8080;     // set our port
 var router = express.Router();          // get an instance of the express Router
 
 // Get race data API service
+// Get race data API service
+router.route('/getevents')
+
+    .get(function(req, res,next) {
+
+      var evnt = require("./app/events.js");
+
+      var eventData=evnt.getevents();
+
+      res.contentType('application/json');
+      res.send(JSON.stringify(eventData));
+
+    });
+
 router.route('/:series/:year/:race')
 
     .get(function(req, res,next) {
@@ -19,7 +33,7 @@ router.route('/:series/:year/:race')
       var sec = require("./app/seconds.js");
 
       //parsing the CSV file
-     
+
       var file = "resources/" + req.params.series + "/" + req.params.year
                + "/" + req.params.race + ".CSV";
 
