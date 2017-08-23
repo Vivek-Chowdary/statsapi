@@ -76,6 +76,11 @@ describe('Stats api', () => {
       done();
     });
 
+    it('Manages times without minutes', (done) => {
+      sec.toSeconds("45.678").should.be.equal(45.678);
+      done();
+    });
+
   });
 
   describe("Stats calculate", () => {
