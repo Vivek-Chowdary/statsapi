@@ -6,6 +6,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 let should = chai.should();
+let sec = require("../app/seconds.js");
+let stat = require("../app/statscalculation.js");
 
 chai.use(chaiHttp);
 var expect = chai.expect;
@@ -23,7 +25,7 @@ describe('Stats api', () => {
         chai.request(server)
             .get('/api/IMSA/2014/LONG_BEACH')
             .end((err, res) => {
-              expect(err).to.have.status(404);
+              res.should.have.status(404);
               done();
             });
       });
@@ -36,4 +38,66 @@ describe('Stats api', () => {
               done();
             });
       });
+
+      it('Returns the CORS headers', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/SPA')
+            .end((err, res) => {
+              res.should.have.header("Access-Control-Allow-Origin", "*");
+              res.should.have.header("Access-Control-Allow-Headers", "X-Requested-With");
+              done();
+            });
+      });
+
+  });
+
+  describe('/GET getevents', () => {
+
+      it('Returns 200', (done) => {
+        chai.request(server)
+            .get('/api/getevents')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
+    });
+
+  describe("Seconds Function", () => {
+
+    it('Manages times with hours', (done) => {
+      sec.toSeconds("1:30:45.678").should.equal(5445.678);
+      done();
+    });
+
+    it('Manages times without hours', (done) => {
+      sec.toSeconds("1:45.678").should.be.equal(105.678);
+      done();
+    });
+
+    it('Manages times without minutes', (done) => {
+      sec.toSeconds("45.678").should.be.equal(45.678);
+      done();
+    });
+
+  });
+
+  describe("Stats calculate", () => {
+
+    it('Returns the data with 3 decimals', (done) => {
+       data = [{
+        class: 'Test',
+        manufacturer: 'TestMaufacturer',
+        team: 'TestTeam',
+        driver_name: 'TestDriver',
+        segundos: '45.677999999'
+      }];
+
+      stat.calcStats(data)[0].min.should.equal('45.678');
+      stat.calcStats(data)[0].avg.should.equal('45.678');
+      stat.calcStats(data)[0].top20.should.equal('45.678');
+
+      done();
+    });
+
   });
