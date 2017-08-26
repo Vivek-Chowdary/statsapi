@@ -90,22 +90,23 @@ app.use('/api', router);
 
 //swagger
 var subpath = express();
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use("/v1", subpath);
 swagger.setAppHandler(subpath);
 app.use(express.static('dist'));
 
 swagger.setApiInfo({
-    title: "example API",
-    description: "API to do something, manage something...",
+    title: "Endurance Racing API",
+    description: "API to do calculate the number of laps, best lap, average and top 20 best laps average",
     termsOfServiceUrl: "",
-    contact: "yourname@something.com",
+    contact: "@oalfonsogarcia",
     license: "",
     licenseUrl: ""
 });
 
 subpath.get('/', function (req, res) {
-    res.sendfile(__dirname + '/dist/index.html');
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
 swagger.configureSwaggerPaths('', 'api-docs', '');

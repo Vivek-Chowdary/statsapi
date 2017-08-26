@@ -36,7 +36,7 @@
     },
     "/api/{series}/{year}/{race}": {
            "get":{
-             "description":"Retrieves the details for a race at driver level",
+             "description":"Retrieves the details for a race at driver level. Nnumber of laps, best lap, average and top 20 best laps average",
              "operationId":"Retrieve Driver stat",
              "produces": [
                "application/json"
