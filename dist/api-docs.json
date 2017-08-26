@@ -1,0 +1,149 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Endurance Racing Stats API",
+    "description": "API to return basic static for IMSA and WEC",
+    "termsOfService": "http://swagger.io/terms/"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/getevents": {
+       "get": {
+          "description": "Retrieves the list of races available in the system",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "GET OK, send list of races",
+              "schema": {
+                 "$ref": "#/definitions/raceList"
+              }
+            }
+          }
+        }
+    },
+    "/api/{series}/{year}/{race}": {
+           "get":{
+             "description":"Retrieves the details for a race at driver level",
+             "operationId":"Retrieve Driver stat",
+             "produces": [
+               "application/json"
+             ],
+             "parameters":[
+                 {
+                   "name": "series",
+                   "in": "path",
+                   "description": "Name of the series",
+                   "required": true,
+                   "type": "string",
+                   "example" : "IMSA"
+                 },
+                 {
+                   "name": "year",
+                   "in": "path",
+                   "description": "Year of the race",
+                   "required": true,
+                   "type": "string",
+                   "example" : "2017"
+                 },
+                 {
+                   "name": "race",
+                   "in": "path",
+                   "description": "Race to query",
+                   "required": true,
+                   "type": "string",
+                   "example" : "SEBRING"
+                 }
+               ],
+             "responses": {
+               "200": {
+                 "description": "OK",
+                 "schema":{
+                   "$ref":"#/definitions/raceData"
+                 }
+               },
+               "404": {
+                 "description": "Race not Found"
+               }
+             }
+           },
+    }
+  },
+  "definitions": {
+    "raceData": {
+        "properties": {
+            "class": {
+              "required": true,
+              "type" : "string",
+              "example" : "LMP1"
+            },
+            "manufacturer" : {
+              "required": true,
+              "type": "string",
+              "example": "Aston Martin"
+            },
+            "team" : {
+              "required": true,
+              "type": "string",
+              "example": "Manor"
+            },
+            "driver" : {
+              "required": true,
+              "type": "string",
+              "example": "Andre Lotterer"
+            },
+            "laps" : {
+              "required": true,
+              "type": "number",
+              "example": "78"
+            },
+            "min" : {
+              "required": true,
+              "type": "number",
+              "example": "178.44"
+            },
+            "avg" : {
+              "required": true,
+              "type": "number",
+              "example": "188.44"
+            },
+            "Top 20 average" : {
+              "required": true,
+              "type": "number",
+              "example": "183.44"
+            }
+        }
+    },
+    "raceList": {
+        "properties": {
+            "series": {
+              "required": true,
+              "type" : "string",
+              "example" : "IMSA"
+            },
+            "year" : {
+              "required": true,
+              "type": "string",
+              "example": "2017"
+            },
+            "event" : {
+              "required": true,
+              "type": "string",
+              "example": "SEBRING"
+            }
+        }
+    },
+  }
+}
