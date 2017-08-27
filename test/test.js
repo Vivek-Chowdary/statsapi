@@ -14,7 +14,7 @@ var expect = chai.expect;
 
 //Our parent block
 describe('Stats api', () => {
-    beforeEach((done) => { });     
+    beforeEach((done) => { });
   });
 
   /*
@@ -45,6 +45,15 @@ describe('Stats api', () => {
             .end((err, res) => {
               res.should.have.header("Access-Control-Allow-Origin", "*");
               res.should.have.header("Access-Control-Allow-Headers", "X-Requested-With");
+              done();
+            });
+      });
+
+      it('Included IMSA 2017 VIRGINIA', (done) => {
+        chai.request(server)
+            .get('/api/IMSA/2017/VIRGINIA')
+            .end((err, res) => {
+              res.should.have.status(200);
               done();
             });
       });
