@@ -4,6 +4,9 @@
 // call the packages we need
 var express    = require('express');      // call express
 var app        = express();               // define our app using express
+var argv       = require('minimist')(process.argv.slice(2));
+var swagger    = require("swagger-node-express");
+var bodyParser = require( 'body-parser' );
 
 var port = process.env.PORT || 8080;     // set our port
 var router = express.Router();          // get an instance of the express Router
@@ -33,7 +36,7 @@ router.route('/:series/:year/:race')
       var sec = require("./app/seconds.js");
 
       //parsing the CSV file
-     
+
       var file = "resources/" + req.params.series + "/" + req.params.year + "/" + req.params.race + ".CSV";
 
       var file = "resources/" + req.params.series + "/" + req.params.year
@@ -43,7 +46,7 @@ router.route('/:series/:year/:race')
           res.sendStatus(404);
         }
         else {
- 
+
           fs.createReadStream(file)
             .pipe(csv.parse({delimiter: ";", headers: true, trim: true}))
             .on("data", function(data){
@@ -66,7 +69,7 @@ router.route('/:series/:year/:race')
               var flatData=st.calcStats(raceData);
 
               //sending the output as JSON
-       
+
               res.contentType('application/json');
               res.send(JSON.stringify(flatData));
             });
@@ -84,6 +87,37 @@ app.all('/*', function(req, res, next) {
 
 // all of our routes will be prefixed with /api
 app.use('/api', router);
+
+//swagger
+var subpath = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use("/v1", subpath);
+swagger.setAppHandler(subpath);
+app.use(express.static('dist'));
+
+swagger.setApiInfo({
+    title: "Endurance Racing API",
+    description: "API to do calculate the number of laps, best lap, average and top 20 best laps average",
+    termsOfServiceUrl: "",
+    contact: "@oalfonsogarcia",
+    license: "",
+    licenseUrl: ""
+});
+
+subpath.get('/', function (req, res) {
+    res.sendFile(__dirname + '/dist/index.html');
+});
+
+swagger.configureSwaggerPaths('', 'api-docs', '');
+
+var domain = 'localhost';
+if(argv.domain !== undefined)
+    domain = argv.domain;
+else
+    console.log('No --domain=xxx specified, taking default hostname "localhost".');
+var applicationUrl = 'http://' + domain;
+swagger.configure(applicationUrl, '1.0.0');
 
 // START THE SERVER
 // =============================================================================
