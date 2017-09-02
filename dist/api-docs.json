@@ -6,6 +6,7 @@
     "description": "API to return basic static for IMSA and WEC",
     "termsOfService": "http://swagger.io/terms/"
   },
+  "host": "echo-api.endpoints.round-folio-164619.cloud.goog",
   "basePath": "/",
   "schemes": [
     "http"
@@ -47,24 +48,21 @@
                    "in": "path",
                    "description": "Name of the series",
                    "required": true,
-                   "type": "string",
-                   "example" : "IMSA"
+                   "type": "string"
                  },
                  {
                    "name": "year",
                    "in": "path",
                    "description": "Year of the race",
                    "required": true,
-                   "type": "string",
-                   "example" : "2017"
+                   "type": "string"
                  },
                  {
                    "name": "race",
                    "in": "path",
                    "description": "Race to query",
                    "required": true,
-                   "type": "string",
-                   "example" : "SEBRING"
+                   "type": "string"
                  }
                ],
              "responses": {
@@ -78,72 +76,74 @@
                  "description": "Race not Found"
                }
              }
-           },
+           }
     }
   },
+
   "definitions": {
-    "raceData": {
+    "raceList":{
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/raceobject"
+      }
+    },
+    "raceData":{
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/raceDataRecord"
+      }
+    },
+    "raceDataRecord": {
         "properties": {
             "class": {
-              "required": true,
               "type" : "string",
               "example" : "LMP1"
             },
             "manufacturer" : {
-              "required": true,
               "type": "string",
               "example": "Aston Martin"
             },
             "team" : {
-              "required": true,
               "type": "string",
               "example": "Manor"
             },
             "driver" : {
-              "required": true,
               "type": "string",
               "example": "Andre Lotterer"
             },
             "laps" : {
-              "required": true,
               "type": "number",
               "example": "78"
             },
             "min" : {
-              "required": true,
               "type": "number",
               "example": "178.44"
             },
             "avg" : {
-              "required": true,
               "type": "number",
               "example": "188.44"
             },
             "Top 20 average" : {
-              "required": true,
               "type": "number",
               "example": "183.44"
             }
         }
     },
-    "raceList": {
+    "raceobject": {
         "properties": {
             "series": {
-              "required": true,
               "type" : "string",
               "example" : "IMSA"
             },
             "year" : {
-              "required": true,
               "type": "string",
               "example": "2017"
             },
             "event" : {
-              "required": true,
               "type": "string",
               "example": "SEBRING"
             }
         }
-    },
+    }
   }
 }

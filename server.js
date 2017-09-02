@@ -8,7 +8,7 @@ var argv       = require('minimist')(process.argv.slice(2));
 var swagger    = require("swagger-node-express");
 var bodyParser = require( 'body-parser' );
 
-var port = process.env.PORT || 8080;     // set our port
+var port = process.env.PORT || 8081;     // set our port
 var router = express.Router();          // get an instance of the express Router
 
 // Get race data API service
