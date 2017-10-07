@@ -58,6 +58,32 @@ describe('Stats api', () => {
             });
       });
 
+      it('Included IMSA 2017 LAGUNA_SECA', (done) => {
+        chai.request(server)
+            .get('/api/IMSA/2017/LAGUNA_SECA')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
+
+      it('Included WEC 2017 MEXICO', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/MEXICO')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
+
+      it('Included WEC 2017 AUSTIN', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/AUSTIN')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
   });
 
   describe('/GET getevents', () => {

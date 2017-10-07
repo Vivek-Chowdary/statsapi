@@ -11,6 +11,7 @@ exports.getevents = function() {
     { series: "IMSA", year: "2017", event: "LIME ROCK"  },
     { series: "IMSA", year: "2017", event: "ROAD AMERICA"  },
     { series: "IMSA", year: "2017", event: "VIRGINIA"  },
+    { series: "IMSA", year: "2017", event: "LAGUNA_SECA"  },
     { series: "WEC",  year: "2015", event: "SILVERSTONE"  },
     { series: "WEC",  year: "2015", event: "SPA"  },
     { series: "WEC",  year: "2015", event: "LE_MANS"  },
@@ -33,6 +34,8 @@ exports.getevents = function() {
     { series: "WEC",  year: "2017", event: "SPA"  },
     { series: "WEC",  year: "2017", event: "LE_MANS"  },
     { series: "WEC",  year: "2017", event: "NURBURGRING"  },
+    { series: "WEC",  year: "2017", event: "MEXICO"  },
+    { series: "WEC",  year: "2017", event: "AUSTIN"  },
   ]);
 
 }
