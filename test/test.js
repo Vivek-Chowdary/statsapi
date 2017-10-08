@@ -84,6 +84,15 @@ describe('Stats api', () => {
               done();
             });
       });
+
+      it('Included IMSA 2017 ROAD_ATLANTA', (done) => {
+        chai.request(server)
+            .get('/api/IMSA/2017/ROAD_ATLANTA')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
   });
 
   describe('/GET getevents', () => {

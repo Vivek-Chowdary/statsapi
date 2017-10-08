@@ -12,6 +12,7 @@ exports.getevents = function() {
     { series: "IMSA", year: "2017", event: "ROAD AMERICA"  },
     { series: "IMSA", year: "2017", event: "VIRGINIA"  },
     { series: "IMSA", year: "2017", event: "LAGUNA_SECA"  },
+    { series: "IMSA", year: "2017", event: "ROAD_ATLANTA"  },
     { series: "WEC",  year: "2015", event: "SILVERSTONE"  },
     { series: "WEC",  year: "2015", event: "SPA"  },
     { series: "WEC",  year: "2015", event: "LE_MANS"  },
