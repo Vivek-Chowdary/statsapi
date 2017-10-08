@@ -36,8 +36,6 @@ router.route('/:series/:year/:race')
 
       var file = "resources/" + req.params.series + "/" + req.params.year + "/" + req.params.race + ".CSV";
 
-      var file = "resources/" + req.params.series + "/" + req.params.year
-               + "/" + req.params.race + ".CSV";
       fs.stat(file, function(err, stat) {
         if(err != null) {
           res.sendStatus(404);
