@@ -37,6 +37,8 @@ exports.getevents = function() {
     { series: "WEC",  year: "2017", event: "NURBURGRING"  },
     { series: "WEC",  year: "2017", event: "MEXICO"  },
     { series: "WEC",  year: "2017", event: "AUSTIN"  },
+    { series: "WEC",  year: "2017", event: "FUJI"  },
+
   ]);
 
 }
