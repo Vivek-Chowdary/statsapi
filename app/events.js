@@ -38,6 +38,7 @@ exports.getevents = function() {
     { series: "WEC",  year: "2017", event: "MEXICO"  },
     { series: "WEC",  year: "2017", event: "AUSTIN"  },
     { series: "WEC",  year: "2017", event: "FUJI"  },
+    { series: "WEC",  year: "2017", event: "SHANGHAI"  },
 
   ]);
 

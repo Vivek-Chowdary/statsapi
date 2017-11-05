@@ -101,6 +101,14 @@ describe('Stats api', () => {
               done();
             });
       });
+      it('Included WEC 2017 SHANGHAI', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/SHANGHAI')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
   });
 
   describe('/GET getevents', () => {
