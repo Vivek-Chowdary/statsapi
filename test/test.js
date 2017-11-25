@@ -109,6 +109,14 @@ describe('Stats api', () => {
               done();
             });
       });
+      it('Included WEC 2017 BAHRAIN', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/BAHRAIN')
+            .end((err, res) => {
+              res.should.have.status(200);
+              done();
+            });
+      });
   });
 
   describe('/GET getevents', () => {
