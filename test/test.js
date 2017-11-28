@@ -49,6 +49,16 @@ describe('Stats api', () => {
             });
       });
 
+      it('should be json file', (done) => {
+        chai.request(server)
+            .get('/api/WEC/2017/SPA')
+            .end((err, res) => {
+              res.should.be.json; // passes test
+              res.body.should.be.a('array');
+              done();
+            });
+      });
+
       it('Included IMSA 2017 VIRGINIA', (done) => {
         chai.request(server)
             .get('/api/IMSA/2017/VIRGINIA')
@@ -129,6 +139,31 @@ describe('Stats api', () => {
               done();
             });
       });
+
+      it('should be json file', (done) => {
+        chai.request(server)
+            .get('/api/getevents')
+            .end((err, res) => {
+              res.should.be.json; // passes test
+              res.body.should.be.a('array');
+              done();
+            });
+      });
+
+      it('should have BAHRAIN 2017 WEC', (done) => {
+        chai.request(server)
+            .get('/api/getevents')
+            .end((err, res) => {
+              res.body[38].should.have.property('series');
+              res.body[38].should.have.property('year');
+              res.body[38].should.have.property('event');
+              res.body[38].series.should.equal('WEC');
+              res.body[38].year.should.equal('2017');
+              res.body[38].event.should.equal('BAHRAIN');
+              done();
+            });
+      });
+
 
     });
 
