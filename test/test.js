@@ -125,7 +125,7 @@ describe('Stats api', () => {
             .end((err, res) => {
               res.should.have.status(200);
               res.should.be.json; // passes test
-              res.body.should.be.a('array');Chec
+              res.body.should.be.a('array');
               done();
             });
       });
