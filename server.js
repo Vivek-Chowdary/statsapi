@@ -14,12 +14,26 @@ router.route('/getevents')
 
     .get(function(req, res,next) {
 
-      var evnt = require("./app/events.js");
+      var fs = require('fs');
+      var eventsData = new Array();
+      var csv = require("fast-csv");
 
-      var eventData=evnt.getevents();
-
-      res.contentType('application/json');
-      res.send(JSON.stringify(eventData));
+      fs.createReadStream("resources/Events.csv")
+        .pipe(csv.parse({delimiter: ";", headers: true, trim: true}))
+        .on('error', function(err) {
+            console.log("error");
+        })
+        .on("data", function(data){
+          //We build the array with the event data
+          eventsData.push( { series: data.SERIES,
+                                year:   data.YEAR,
+                                event:  data.EVENT});
+          })
+        .on('end', function() {
+            console.log("END");
+            res.contentType('application/json');
+            res.send(JSON.stringify(eventsData));
+          })
 
     });
 
